@@ -2,8 +2,6 @@ package main
 
 import "fmt"
 
-type By func(person User) bool
-
 type User struct {
 	id         int
 	name       string
@@ -13,6 +11,16 @@ type User struct {
 	followers  int
 }
 
+var users []User = []User{
+	User{101, "A", 18, 20, 645, 2342},
+	User{102, "B", 23, 110, 323, 110},
+	User{103, "C", 40, 125, 1120, 4577},
+	User{104, "D", 36, 45, 323, 1201},
+	User{105, "D", 42, 45, 323, 1201},
+}
+
+type By func(user User) bool
+
 func (by By) Filter(s1 []User) []User {
 	filtered := make([]User, 0)
 	for _, ele := range s1 {
@@ -21,14 +29,6 @@ func (by By) Filter(s1 []User) []User {
 		}
 	}
 	return filtered
-}
-
-var persons []User = []User{
-	User{101, "A", 18, 20, 645, 2342},
-	User{102, "B", 23, 110, 323, 110},
-	User{103, "C", 40, 125, 1120, 4577},
-	User{104, "D", 36, 45, 323, 1201},
-	User{105, "D", 42, 45, 323, 1201},
 }
 
 func main() {
@@ -52,15 +52,15 @@ func main() {
 	matured := func(user User) bool {
 		return user.age > 35
 	}
-	frequestUsers := By(frequent).Filter(persons)
+	frequestUsers := By(frequent).Filter(users)
 	fmt.Println(frequestUsers)
 
-	appreciatedUsers := By(appreciated).Filter(persons)
+	appreciatedUsers := By(appreciated).Filter(users)
 	fmt.Println(appreciatedUsers)
 
-	respectedUsers := By(respected).Filter(persons)
+	respectedUsers := By(respected).Filter(users)
 	fmt.Println(respectedUsers)
 
-	maturedUsers := By(matured).Filter(persons)
+	maturedUsers := By(matured).Filter(users)
 	fmt.Println(maturedUsers)
 }
